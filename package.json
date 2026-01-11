@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "format": "oxfmt --list-different || oxfmt",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "deploy": "wrangler deploy"
   },
   "dependencies": {
     "@astrojs/solid-js": "^5.1.3",
