@@ -1,1 +1,55 @@
 @import "tailwindcss";
+
+/* Mobile optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Landscape orientation optimizations */
+@media (orientation: landscape) {
+  .min-h-screen {
+    min-height: 100vh;
+  }
+}
+
+/* Prevent zoom on input focus */
+input,
+button,
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* Safe area insets for mobile devices */
+@supports (padding: max(0px)) {
+  .safe-area {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Optimize buttons for touch */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* Hide scrollbars for cleaner mobile look */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* PWA manifest styles */
+@media (display-mode: standalone) {
+  body {
+    background-color: #14532d;
+  }
+}

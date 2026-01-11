@@ -1,0 +1,19 @@
+{
+  "name": "Poker Hold'em Timer",
+  "short_name": "PokerTimer",
+  "description": "Mobile-friendly poker tournament timer with blind levels",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#14532d",
+  "theme_color": "#14532d",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["utilities", "games"],
+  "lang": "en"
+}
