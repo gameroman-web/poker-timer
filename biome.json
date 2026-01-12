@@ -27,7 +27,7 @@
       "style": {
         "useNodejsImportProtocol": "warn"
       },
-      "a11y": "info",
+      "a11y": "off",
       "suspicious": {
         "useIterableCallbackReturn": "warn"
       }
