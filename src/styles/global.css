@@ -2,17 +2,17 @@
 
 /* Mobile optimizations */
 * {
-	-webkit-tap-highlight-color: transparent;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Landscape orientation optimizations */
 @media (orientation: landscape) {
-	.min-h-screen {
-		min-height: 100vh;
-	}
+  .min-h-screen {
+    min-height: 100vh;
+  }
 }
 
 /* Prevent zoom on input focus */
@@ -20,36 +20,75 @@ input,
 button,
 textarea,
 select {
-	font-size: 16px;
+  font-size: 16px;
 }
 
 /* Safe area insets for mobile devices */
 @supports (padding: max(0px)) {
-	.safe-area {
-		padding-left: max(1rem, env(safe-area-inset-left));
-		padding-right: max(1rem, env(safe-area-inset-right));
-		padding-bottom: max(1rem, env(safe-area-inset-bottom));
-	}
+  .safe-area {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
 }
 
 /* Optimize buttons for touch */
 .touch-manipulation {
-	touch-action: manipulation;
+  touch-action: manipulation;
 }
 
 /* Hide scrollbars for cleaner mobile look */
 .hide-scrollbar::-webkit-scrollbar {
-	display: none;
+  display: none;
 }
 
 .hide-scrollbar {
-	-ms-overflow-style: none;
-	scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* PWA manifest styles */
 @media (display-mode: standalone) {
-	body {
-		background-color: #14532d;
-	}
+  body {
+    background-color: #14532d;
+  }
+}
+
+/* Enhanced form inputs */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Focus states */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.2);
+}
+
+/* Better contrast for text */
+.text-green-300 {
+  color: #86efac;
+}
+
+.text-green-200 {
+  color: #bbf7d0;
+}
+
+/* Button hover effects */
+button:active {
+  transform: scale(0.98);
+}
+
+/* Smooth transitions */
+* {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }

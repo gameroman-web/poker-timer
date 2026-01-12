@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**/*.ts", "**/*.tsx", "**/*.astro", "**/*.json"]
+    "includes": ["**/*"]
   },
   "formatter": {
     "enabled": true,
@@ -26,6 +26,10 @@
     "rules": {
       "style": {
         "useNodejsImportProtocol": "warn"
+      },
+      "a11y": "info",
+      "suspicious": {
+        "useIterableCallbackReturn": "warn"
       }
     }
   },

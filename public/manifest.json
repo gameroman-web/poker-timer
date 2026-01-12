@@ -8,5 +8,7 @@
   "theme_color": "#14532d",
   "orientation": "any",
   "categories": ["utilities", "games"],
-  "lang": "en"
+  "lang": "en",
+  "scope": "/",
+  "prefer_related_applications": false
 }
