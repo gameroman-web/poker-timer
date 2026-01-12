@@ -1,12 +1,12 @@
 {
   "name": "poker-timer",
-  "private": "true",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "format": "oxfmt --list-different || oxfmt",
-    "lint": "oxlint",
+    "lint": "biome check",
+    "format": "biome check --write",
     "deploy": "wrangler deploy"
   },
   "dependencies": {
@@ -17,8 +17,7 @@
     "tailwindcss": "^4.1.18"
   },
   "devDependencies": {
-    "oxfmt": "^0.23.0",
-    "oxlint": "^1.38.0",
+    "@biomejs/biome": "2.3.11",
     "wrangler": "^4.58.0"
   }
 }

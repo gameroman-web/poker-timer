@@ -7,13 +7,6 @@
   "background_color": "#14532d",
   "theme_color": "#14532d",
   "orientation": "any",
-  "icons": [
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    }
-  ],
   "categories": ["utilities", "games"],
   "lang": "en"
 }
