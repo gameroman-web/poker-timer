@@ -1,6 +1,16 @@
 import { createEffect, createSignal } from "solid-js";
 
-const TimerSetup = (props) => {
+interface TimerSetupProps {
+  minFirstRound: () => number;
+  numberOfRounds: () => number;
+  timerPerRound: () => number;
+  setMinFirstRound: (value: number) => void;
+  setNumberOfRounds: (value: number) => void;
+  setTimerPerRound: (value: number) => void;
+  onStartTimer: () => void;
+}
+
+const TimerSetup = (props: TimerSetupProps) => {
   const [inputMinFirstRound, setInputMinFirstRound] = createSignal(
     props.minFirstRound().toString(),
   );
@@ -68,7 +78,7 @@ const TimerSetup = (props) => {
     <div class="w-full max-w-lg mx-auto">
       <div class="text-center mb-8">
         <h1 class="text-4xl font-bold mb-2 text-white">Tournament Setup</h1>
-        <p class="text-green-200">Configure your poker tournament settings</p>
+        <p class="text-gray-300">Configure your poker tournament settings</p>
       </div>
 
       <div class="bg-black/50 backdrop-blur-lg rounded-3xl p-8 mb-6 border-2 border-green-500/30 shadow-2xl">
@@ -168,8 +178,9 @@ const TimerSetup = (props) => {
       </div>
 
       <button
+        type="button"
         onClick={props.onStartTimer}
-        class="w-full bg-linear-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center space-x-2"
+        class="w-full bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center space-x-2"
       >
         <svg
           class="w-6 h-6"

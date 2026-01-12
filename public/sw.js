@@ -1,13 +1,5 @@
 const CACHE_NAME = "poker-timer-v1";
-const urlsToCache = [
-  "/",
-  "/index.html",
-  "/manifest.json",
-  "/src/components/PokerTimer.jsx",
-  "/src/components/TimerSetup.jsx",
-  "/src/components/ActiveTimer.jsx",
-  "/src/styles/global.css",
-];
+const urlsToCache = ["/", "/index.html", "/manifest.json"];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -34,6 +26,7 @@ self.addEventListener("activate", (event) => {
           if (cacheName !== CACHE_NAME) {
             return caches.delete(cacheName);
           }
+          return Promise.resolve();
         }),
       );
     }),

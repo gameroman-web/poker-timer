@@ -4,8 +4,14 @@
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
+}
+
+/* Allow text selection for inputs and specific elements */
+input,
+textarea,
+select {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 /* Landscape orientation optimizations */
@@ -45,6 +51,11 @@ select {
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+/* Default green background for consistency */
+body {
+  background-color: #14532d;
 }
 
 /* PWA manifest styles */

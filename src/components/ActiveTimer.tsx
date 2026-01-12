@@ -1,6 +1,12 @@
 import { createEffect, createSignal, onCleanup } from "solid-js";
 
-const ActiveTimer = (props) => {
+interface ActiveTimerProps {
+  initialTime: number;
+  blindLevels: Array<{ sb: number; bb: number; time: number }>;
+  onBackToSetup: () => void;
+}
+
+const ActiveTimer = (props: ActiveTimerProps) => {
   const [timeLeft, setTimeLeft] = createSignal(props.initialTime);
   const [isRunning, setIsRunning] = createSignal(false);
   const [currentLevel, setCurrentLevel] = createSignal(1);
@@ -51,21 +57,11 @@ const ActiveTimer = (props) => {
     }
   };
 
-  const prevLevel = () => {
-    const newLevel = currentLevel() - 1;
-    if (newLevel >= 1) {
-      setCurrentLevel(newLevel);
-      setTimeLeft(props.blindLevels[newLevel - 1].time);
-      setIsRunning(false);
-      clearInterval(interval);
-    }
-  };
-
   const resetTimer = () => {
     setIsRunning(false);
     clearInterval(interval);
     setTimeLeft(
-      props.blindLevels[currentLevel() - 1]?.time || props.initialTime,
+      props.blindLevels[currentLevel() - 1]?.time ?? props.initialTime,
     );
   };
 
@@ -94,7 +90,7 @@ const ActiveTimer = (props) => {
           </div>
 
           <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="bg-linear-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
+            <div class="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
               <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Small Blind
               </div>
@@ -102,7 +98,7 @@ const ActiveTimer = (props) => {
                 ${currentBlindLevel?.sb || 0}
               </div>
             </div>
-            <div class="bg-linear-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
+            <div class="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
               <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Big Blind
               </div>
@@ -133,6 +129,7 @@ const ActiveTimer = (props) => {
 
       <div class="grid grid-cols-2 gap-3 mb-6">
         <button
+          type="button"
           onClick={isRunning() ? pauseTimer : startTimer}
           classList={{
             "bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400":
@@ -186,8 +183,9 @@ const ActiveTimer = (props) => {
         </button>
 
         <button
+          type="button"
           onClick={resetTimer}
-          class="bg-linear-to-r from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
+          class="bg-gradient-to-r from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
         >
           <svg
             class="w-6 h-6 mr-2"
@@ -206,51 +204,8 @@ const ActiveTimer = (props) => {
         </button>
       </div>
 
-      <div class="grid grid-cols-2 gap-3 mb-6">
-        <button
-          onClick={prevLevel}
-          disabled={currentLevel() <= 1}
-          class="bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:opacity-50 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation flex items-center justify-center"
-        >
-          <svg
-            class="w-5 h-5 mr-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-          Previous
-        </button>
-
-        <button
-          onClick={nextLevel}
-          disabled={currentLevel() >= props.blindLevels.length}
-          class="bg-gray-700 hover:bg-gray-600 disabled:bg-gray-800 disabled:opacity-50 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation flex items-center justify-center"
-        >
-          Next
-          <svg
-            class="w-5 h-5 ml-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
-      </div>
-
       <button
+        type="button"
         onClick={props.onBackToSetup}
         class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
       >
@@ -271,7 +226,7 @@ const ActiveTimer = (props) => {
       </button>
 
       {currentLevel() > props.blindLevels.length && (
-        <div class="mt-6 bg-linear-to-r from-yellow-600 to-orange-600 rounded-xl p-4 text-center">
+        <div class="mt-6 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-xl p-4 text-center">
           <div class="text-white font-bold text-lg">Tournament Complete!</div>
           <div class="text-yellow-100 text-sm">
             All levels have been completed
