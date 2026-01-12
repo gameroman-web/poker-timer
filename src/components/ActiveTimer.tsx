@@ -90,7 +90,7 @@ const ActiveTimer = (props: ActiveTimerProps) => {
           </div>
 
           <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
+            <div class="bg-linear-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
               <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Small Blind
               </div>
@@ -98,7 +98,7 @@ const ActiveTimer = (props: ActiveTimerProps) => {
                 ${currentBlindLevel?.sb || 0}
               </div>
             </div>
-            <div class="bg-gradient-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
+            <div class="bg-linear-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
               <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Big Blind
               </div>
@@ -185,7 +185,7 @@ const ActiveTimer = (props: ActiveTimerProps) => {
         <button
           type="button"
           onClick={resetTimer}
-          class="bg-gradient-to-r from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
+          class="bg-linear-to-r from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
         >
           <svg
             class="w-6 h-6 mr-2"
@@ -226,7 +226,7 @@ const ActiveTimer = (props: ActiveTimerProps) => {
       </button>
 
       {currentLevel() > props.blindLevels.length && (
-        <div class="mt-6 bg-gradient-to-r from-yellow-600 to-orange-600 rounded-xl p-4 text-center">
+        <div class="mt-6 bg-linear-to-r from-yellow-600 to-orange-600 rounded-xl p-4 text-center">
           <div class="text-white font-bold text-lg">Tournament Complete!</div>
           <div class="text-yellow-100 text-sm">
             All levels have been completed
