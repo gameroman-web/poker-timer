@@ -1,4 +1,4 @@
-import { createEffect, createSignal } from "solid-js";
+import NumberInput from "./NumberInput";
 
 interface TimerSetupProps {
   minFirstRound: () => number;
@@ -11,46 +11,6 @@ interface TimerSetupProps {
 }
 
 const TimerSetup = (props: TimerSetupProps) => {
-  const [inputMinFirstRound, setInputMinFirstRound] = createSignal(
-    props.minFirstRound().toString(),
-  );
-  const [inputNumberOfRounds, setInputNumberOfRounds] = createSignal(
-    props.numberOfRounds().toString(),
-  );
-  const [inputTimerPerRound, setInputTimerPerRound] = createSignal(
-    (props.timerPerRound() / 60).toString(),
-  );
-
-  createEffect(() => {
-    setInputMinFirstRound(props.minFirstRound().toString());
-    setInputNumberOfRounds(props.numberOfRounds().toString());
-    setInputTimerPerRound((props.timerPerRound() / 60).toString());
-  });
-
-  const handleMinFirstRoundChange = (value: string) => {
-    setInputMinFirstRound(value);
-    const numValue = parseInt(value, 10) || 10;
-    if (numValue >= 1 && numValue <= 1000) {
-      props.setMinFirstRound(numValue);
-    }
-  };
-
-  const handleNumberOfRoundsChange = (value: string) => {
-    setInputNumberOfRounds(value);
-    const numValue = parseInt(value, 10) || 12;
-    if (numValue >= 1 && numValue <= 50) {
-      props.setNumberOfRounds(numValue);
-    }
-  };
-
-  const handleTimerPerRoundChange = (value: string) => {
-    setInputTimerPerRound(value);
-    const numValue = parseInt(value, 10) || 10;
-    if (numValue >= 1 && numValue <= 120) {
-      props.setTimerPerRound(numValue * 60);
-    }
-  };
-
   const generateBlindLevels = () => {
     const levels = [];
     let currentSmall = props.minFirstRound();
@@ -87,71 +47,40 @@ const TimerSetup = (props: TimerSetupProps) => {
             <label class="block text-sm font-semibold text-yellow-400 mb-2">
               Minimum First Round ($)
             </label>
-            <div class="relative">
-              <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                $
-              </span>
-              <input
-                type="number"
-                min="1"
-                max="1000"
-                value={inputMinFirstRound()}
-                onInput={(e) => handleMinFirstRoundChange(e.target.value)}
-                class="w-full bg-gray-900 border-2 border-gray-700 rounded-xl pl-8 pr-3 py-3 text-white font-mono text-lg focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all"
-                placeholder="10"
-              />
-            </div>
-            {inputMinFirstRound() &&
-              (parseInt(inputMinFirstRound(), 10) < 1 ||
-                parseInt(inputMinFirstRound(), 10) > 1000) && (
-                <p class="text-red-400 text-xs mt-1">
-                  Please enter a value between 1 and 1000
-                </p>
-              )}
+            <NumberInput
+              value={props.minFirstRound()}
+              onChange={props.setMinFirstRound}
+              min={1}
+              max={1000}
+              prefix="$"
+              placeholder="10"
+            />
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-yellow-400 mb-2">
               Number of Rounds
             </label>
-            <input
-              type="number"
-              min="1"
-              max="50"
-              value={inputNumberOfRounds()}
-              onInput={(e) => handleNumberOfRoundsChange(e.target.value)}
-              class="w-full bg-gray-900 border-2 border-gray-700 rounded-xl px-3 py-3 text-white font-mono text-lg focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all"
+            <NumberInput
+              value={props.numberOfRounds()}
+              onChange={props.setNumberOfRounds}
+              min={1}
+              max={50}
               placeholder="12"
             />
-            {inputNumberOfRounds() &&
-              (parseInt(inputNumberOfRounds(), 10) < 1 ||
-                parseInt(inputNumberOfRounds(), 10) > 50) && (
-                <p class="text-red-400 text-xs mt-1">
-                  Please enter a value between 1 and 50
-                </p>
-              )}
           </div>
 
           <div>
             <label class="block text-sm font-semibold text-yellow-400 mb-2">
               Timer Per Round (minutes)
             </label>
-            <input
-              type="number"
-              min="1"
-              max="120"
-              value={inputTimerPerRound()}
-              onInput={(e) => handleTimerPerRoundChange(e.target.value)}
-              class="w-full bg-gray-900 border-2 border-gray-700 rounded-xl px-3 py-3 text-white font-mono text-lg focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 transition-all"
+            <NumberInput
+              value={Math.floor(props.timerPerRound() / 60)}
+              onChange={(value) => props.setTimerPerRound(value * 60)}
+              min={1}
+              max={120}
               placeholder="10"
             />
-            {inputTimerPerRound() &&
-              (parseInt(inputTimerPerRound(), 10) < 1 ||
-                parseInt(inputTimerPerRound(), 10) > 120) && (
-                <p class="text-red-400 text-xs mt-1">
-                  Please enter a value between 1 and 120
-                </p>
-              )}
           </div>
         </div>
       </div>
