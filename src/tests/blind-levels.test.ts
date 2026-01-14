@@ -53,16 +53,6 @@ describe("getBlindLevels", () => {
     );
   });
 
-  it("is a multiple of on of the 4 before it", () => {
-    expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
-      arr.every((v, i, a) => {
-        if (i === 0) return true;
-        const threeBefore = a.slice(i - 4 < 0 ? 0 : i - 4, i);
-        return threeBefore.some((v2) => v % v2 === 0);
-      }),
-    );
-  });
-
   it("is bigger than the one before it", () => {
     expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
       arr.every((v, i) => {
@@ -79,6 +69,28 @@ describe("getBlindLevels", () => {
         const prev = arr[i - 1];
         if (prev === undefined) return true;
         return v <= prev * 2;
+      }),
+    );
+  });
+
+  it("should have a difference that is one of the previous numbers", () => {
+    expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
+      arr.every((v, i) => {
+        const prev = arr[i - 1];
+        if (prev === undefined) return true;
+        const difference = v - prev;
+        return arr.slice(0, i).includes(difference);
+      }),
+    );
+  });
+
+  it("should always increase by more than 25%", () => {
+    expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
+      arr.every((v, i) => {
+        const prev = arr[i - 1];
+        if (prev === undefined) return true;
+        const difference = v / prev;
+        return difference >= 1.25;
       }),
     );
   });
