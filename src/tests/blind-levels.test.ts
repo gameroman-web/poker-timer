@@ -29,15 +29,27 @@ describe("getBlindLevels", () => {
     ]);
   });
 
-  it("should correctly calculate for the 5th round", () => {
+  it("should correctly calculate for the 6th round", () => {
     expect(getBlindLevels({ first: 25, rounds: 6 })).toEqual([
       25, 50, 75, 100, 150, 200,
     ]);
   });
 
-  it("should all be a multiple of the 1st round", () => {
+  it("should correctly calculate for 10 rounds", () => {
+    expect(getBlindLevels({ first: 25, rounds: 10 })).toEqual([
+      25, 50, 75, 100, 150, 200, 300, 500, 800, 1000,
+    ]);
+  });
+
+  it("should correctly calculate for 13 rounds", () => {
+    expect(getBlindLevels({ first: 25, rounds: 13 })).toEqual([
+      25, 50, 75, 100, 150, 200, 300, 500, 800, 1000, 1500, 2000, 3000,
+    ]);
+  });
+
+  it("should always be a multiple of the 1st round", () => {
     expect(getBlindLevels({ first: 25, rounds: 20 })).toSatisfy((arr) =>
-      arr.every((v) => (v % 25) === 0),
+      arr.every((v) => v % 25 === 0),
     );
   });
 });

@@ -10,7 +10,12 @@ export function getBlindLevels({
 
   for (let i = 0; i < rounds; i++) {
     levels.push(currentSmall);
-    currentSmall = currentSmall * 2;
+
+    if (i >= 3) {
+      currentSmall = currentSmall + first * 2;
+    } else {
+      currentSmall = currentSmall + first;
+    }
   }
 
   return levels;
