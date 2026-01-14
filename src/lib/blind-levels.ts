@@ -32,7 +32,11 @@ export function getBlindLevels({
     } else if (i === 11) {
       currentSmall = currentSmall + first * 40;
     } else {
-      currentSmall = currentSmall + first * 40;
+      const minIncrease = Math.ceil(currentSmall * 0.25);
+      const validIncreases = levels.filter((v) => v >= minIncrease);
+      const increase =
+        validIncreases.length > 0 ? Math.min(...validIncreases) : first * 40;
+      currentSmall = currentSmall + increase;
     }
   }
 
