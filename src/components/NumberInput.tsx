@@ -4,10 +4,9 @@ interface NumberInputProps {
   min: number;
   max: number;
   step?: number;
-  prefix?: string;
-  suffix?: string;
   placeholder?: string;
   disabled?: boolean;
+  label: string;
 }
 
 const NumberInput = (props: NumberInputProps) => {
@@ -22,13 +21,10 @@ const NumberInput = (props: NumberInputProps) => {
   };
 
   return (
-    <div class="relative">
-      {props.prefix && (
-        <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 z-10">
-          {props.prefix}
-        </span>
-      )}
-
+    <div>
+      <label class="block text-sm font-semibold text-yellow-400 mb-2">
+        {props.label}
+      </label>
       <div class="flex items-center bg-gray-900 border-2 border-gray-700 rounded-xl overflow-hidden focus-within:border-yellow-400 focus-within:ring-2 focus-within:ring-yellow-400/20 transition-all">
         <button
           type="button"
@@ -52,9 +48,7 @@ const NumberInput = (props: NumberInputProps) => {
         </button>
 
         <span
-          class={`flex-1 bg-transparent text-white font-mono text-lg text-center py-3 ${
-            props.prefix ? "pl-2" : "pl-3"
-          } ${props.suffix ? "pr-2" : "pr-3"}`}
+          class="flex-1 bg-transparent text-white font-mono text-lg text-center py-3 pl-3 pr-3"
         >
           {props.value.toString() || props.placeholder || "0"}
         </span>

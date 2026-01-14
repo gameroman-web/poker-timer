@@ -44,42 +44,35 @@ const TimerSetup = (props: TimerSetupProps) => {
       <div class="bg-black/50 backdrop-blur-lg rounded-3xl p-8 mb-6 border-2 border-green-500/30 shadow-2xl">
         <div class="space-y-6">
           <div>
-            <label class="block text-sm font-semibold text-yellow-400 mb-2">
-              Minimum First Round ($)
-            </label>
             <NumberInput
               value={props.minFirstRound()}
               onChange={props.setMinFirstRound}
               min={1}
               max={1000}
-              prefix="$"
               placeholder="10"
+              label="Minimum First Round"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-yellow-400 mb-2">
-              Number of Rounds
-            </label>
             <NumberInput
               value={props.numberOfRounds()}
               onChange={props.setNumberOfRounds}
               min={1}
               max={50}
               placeholder="12"
+              label="Number of Rounds"
             />
           </div>
 
           <div>
-            <label class="block text-sm font-semibold text-yellow-400 mb-2">
-              Timer Per Round (minutes)
-            </label>
             <NumberInput
               value={Math.floor(props.timerPerRound() / 60)}
               onChange={(value) => props.setTimerPerRound(value * 60)}
               min={1}
               max={120}
               placeholder="10"
+              label="Timer Per Round (minutes)"
             />
           </div>
         </div>
@@ -94,7 +87,8 @@ const TimerSetup = (props: TimerSetupProps) => {
             <div class="flex justify-between items-center bg-gray-900/50 rounded-lg px-4 py-2 border border-gray-700">
               <span class="text-green-300 font-medium">Level {index + 1}</span>
               <div class="text-white font-mono">
-                <span class="text-yellow-400">${level.sb}</span> /{" "}
+                <span class="text-yellow-400">${level.sb}</span>
+                {" / "}
                 <span class="text-orange-400">${level.bb}</span>
               </div>
               <span class="text-gray-400 text-sm">
