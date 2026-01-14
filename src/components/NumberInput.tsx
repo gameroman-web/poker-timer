@@ -1,17 +1,15 @@
-interface NumberInputProps<T extends number> {
+interface NumberInputProps {
   value: number;
   onChange(value: number): void;
-  values: T[];
+  values: number[];
   label: string;
 }
 
-function NumberInput<T extends number>(props: NumberInputProps<T>) {
-  const steps: number[] = props.values;
-  const index = steps.indexOf(props.value);
-  const currentIndex = index === -1 ? 0 : index;
-
+function NumberInput(props: NumberInputProps) {
   const handleIncrement = () => {
-    const nextIndex = currentIndex + 1;
+    const currentValueIndex = props.values.indexOf(props.value);
+    const actualIndex = currentValueIndex === -1 ? 0 : currentValueIndex;
+    const nextIndex = actualIndex + 1;
     if (nextIndex < props.values.length) {
       const newValue = props.values[nextIndex];
       if (newValue !== undefined) {
@@ -21,7 +19,9 @@ function NumberInput<T extends number>(props: NumberInputProps<T>) {
   };
 
   const handleDecrement = () => {
-    const prevIndex = currentIndex - 1;
+    const currentValueIndex = props.values.indexOf(props.value);
+    const actualIndex = currentValueIndex === -1 ? 0 : currentValueIndex;
+    const prevIndex = actualIndex - 1;
     if (prevIndex >= 0) {
       const newValue = props.values[prevIndex];
       if (newValue !== undefined) {
@@ -40,7 +40,7 @@ function NumberInput<T extends number>(props: NumberInputProps<T>) {
         <button
           type="button"
           onClick={handleDecrement}
-          disabled={currentIndex <= 0}
+          disabled={props.values.indexOf(props.value) <= 0}
           class="px-3 py-3 text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
         >
           <svg
@@ -65,7 +65,9 @@ function NumberInput<T extends number>(props: NumberInputProps<T>) {
         <button
           type="button"
           onClick={handleIncrement}
-          disabled={currentIndex >= props.values.length - 1}
+          disabled={
+            props.values.indexOf(props.value) >= props.values.length - 1
+          }
           class="px-3 py-3 text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
         >
           <svg
