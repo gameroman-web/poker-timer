@@ -5,9 +5,9 @@ import TimerSetup from "./TimerSetup";
 
 function PokerTimer() {
   const [currentPage, setCurrentPage] = createSignal("setup");
-  const [minFirstRound, setMinFirstRound] = createSignal(10);
-  const [numberOfRounds, setNumberOfRounds] = createSignal(12);
-  const [timerPerRound, setTimerPerRound] = createSignal(600);
+  const [minFirstRound, setMinFirstRound] = createSignal(25);
+  const [numberOfRounds, setNumberOfRounds] = createSignal(13);
+  const [timerPerRound, setTimerPerRound] = createSignal(900);
 
   const handleStartTimer = () => {
     setCurrentPage("timer");
