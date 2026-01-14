@@ -12,7 +12,7 @@ function ActiveTimer(props: ActiveTimerProps) {
   const [isRunning, setIsRunning] = createSignal(false);
   const [currentLevel, setCurrentLevel] = createSignal(1);
 
-  let interval: number | undefined;
+  const [interval, setInterval] = createSignal<number | undefined>();
 
   onMount(() => {
     setTimeLeft(props.timePerRound);
@@ -23,7 +23,7 @@ function ActiveTimer(props: ActiveTimerProps) {
   const startTimer = () => {
     if (!isRunning()) {
       setIsRunning(true);
-      interval = window.setInterval(() => {
+      const newInterval = window.setInterval(() => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
             nextLevel();
@@ -33,12 +33,14 @@ function ActiveTimer(props: ActiveTimerProps) {
           return prev - 1;
         });
       }, 1000);
+      setInterval(newInterval);
     }
   };
 
   const pauseTimer = () => {
     setIsRunning(false);
-    clearInterval(interval);
+    clearInterval(interval());
+    setInterval(undefined);
   };
 
   const nextLevel = () => {
@@ -47,18 +49,20 @@ function ActiveTimer(props: ActiveTimerProps) {
       setCurrentLevel(newLevel);
     } else {
       setIsRunning(false);
-      clearInterval(interval);
+      clearInterval(interval());
+      setInterval(undefined);
     }
   };
 
   const resetTimer = () => {
     setIsRunning(false);
-    clearInterval(interval);
+    clearInterval(interval());
+    setInterval(undefined);
     setTimeLeft(props.timePerRound);
   };
 
   onCleanup(() => {
-    clearInterval(interval);
+    clearInterval(interval());
   });
 
   const currentBlindLevel = props.blindLevels[currentLevel() - 1];
