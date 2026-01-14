@@ -1,23 +1,33 @@
-interface NumberInputProps {
+interface NumberInputProps<T extends number> {
   value: number;
   onChange: (value: number) => void;
-  min: number;
-  max: number;
-  step?: number;
-  placeholder?: string;
-  disabled?: boolean;
+  steps: T[];
+  default: T;
   label: string;
 }
 
-const NumberInput = (props: NumberInputProps) => {
+function NumberInput<T extends number>(props: NumberInputProps<T>) {
+  const steps: (T | number)[] = props.steps;
+  const currentIndex = steps.indexOf(props.value);
+
   const handleIncrement = () => {
-    const newValue = Math.min(props.value + (props.step || 1), props.max);
-    props.onChange(newValue);
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < props.steps.length) {
+      const newValue = props.steps[nextIndex];
+      if (newValue !== undefined) {
+        props.onChange(newValue);
+      }
+    }
   };
 
   const handleDecrement = () => {
-    const newValue = Math.max(props.value - (props.step || 1), props.min);
-    props.onChange(newValue);
+    const prevIndex = currentIndex - 1;
+    if (prevIndex >= 0) {
+      const newValue = props.steps[prevIndex];
+      if (newValue !== undefined) {
+        props.onChange(newValue);
+      }
+    }
   };
 
   return (
@@ -29,7 +39,7 @@ const NumberInput = (props: NumberInputProps) => {
         <button
           type="button"
           onClick={handleDecrement}
-          disabled={props.disabled || props.value <= props.min}
+          disabled={currentIndex <= 0}
           class="px-3 py-3 text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
         >
           <svg
@@ -47,16 +57,14 @@ const NumberInput = (props: NumberInputProps) => {
           </svg>
         </button>
 
-        <span
-          class="flex-1 bg-transparent text-white font-mono text-lg text-center py-3 pl-3 pr-3"
-        >
-          {props.value.toString() || props.placeholder || "0"}
+        <span class="flex-1 bg-transparent text-white font-mono text-lg text-center py-3 pl-3 pr-3">
+          {props.value || props.default}
         </span>
 
         <button
           type="button"
           onClick={handleIncrement}
-          disabled={props.disabled || props.value >= props.max}
+          disabled={currentIndex >= props.steps.length - 1}
           class="px-3 py-3 text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
         >
           <svg
@@ -76,6 +84,6 @@ const NumberInput = (props: NumberInputProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default NumberInput;

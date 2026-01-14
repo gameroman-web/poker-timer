@@ -47,9 +47,8 @@ const TimerSetup = (props: TimerSetupProps) => {
             <NumberInput
               value={props.minFirstRound()}
               onChange={props.setMinFirstRound}
-              min={1}
-              max={1000}
-              placeholder="10"
+              steps={[1, 5, 10, 25, 50, 100]}
+              default={10}
               label="Minimum First Round"
             />
           </div>
@@ -58,9 +57,8 @@ const TimerSetup = (props: TimerSetupProps) => {
             <NumberInput
               value={props.numberOfRounds()}
               onChange={props.setNumberOfRounds}
-              min={1}
-              max={50}
-              placeholder="12"
+              steps={Array.from({ length: 50 }, (_, i) => i + 1)}
+              default={12}
               label="Number of Rounds"
             />
           </div>
@@ -69,9 +67,8 @@ const TimerSetup = (props: TimerSetupProps) => {
             <NumberInput
               value={Math.floor(props.timerPerRound() / 60)}
               onChange={(value) => props.setTimerPerRound(value * 60)}
-              min={1}
-              max={120}
-              placeholder="10"
+              steps={[5, 10, 15]}
+              default={15}
               label="Timer Per Round (minutes)"
             />
           </div>
