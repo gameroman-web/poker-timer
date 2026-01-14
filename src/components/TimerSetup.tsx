@@ -27,7 +27,6 @@ function TimerSetup(props: TimerSetupProps) {
               value={props.minFirstRound()}
               onChange={props.setMinFirstRound}
               values={[1, 5, 10, 25, 50, 100]}
-              default={10}
               label="Minimum First Round"
             />
           </div>
@@ -37,7 +36,6 @@ function TimerSetup(props: TimerSetupProps) {
               value={props.numberOfRounds()}
               onChange={props.setNumberOfRounds}
               values={[7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
-              default={12}
               label="Number of Rounds"
             />
           </div>
@@ -47,7 +45,6 @@ function TimerSetup(props: TimerSetupProps) {
               value={Math.floor(props.timerPerRound() / 60)}
               onChange={(value) => props.setTimerPerRound(value * 60)}
               values={[5, 10, 15]}
-              default={15}
               label="Timer Per Round (minutes)"
             />
           </div>

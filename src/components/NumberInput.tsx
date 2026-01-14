@@ -1,16 +1,14 @@
-interface NumberInputProps<T extends number, D extends T> {
+interface NumberInputProps<T extends number> {
   value: number;
   onChange(value: number): void;
   values: T[];
-  default: D;
   label: string;
 }
 
-function NumberInput<T extends number, D extends T>(
-  props: NumberInputProps<T, D>,
-) {
+function NumberInput<T extends number>(props: NumberInputProps<T>) {
   const steps: number[] = props.values;
-  const currentIndex = steps.indexOf(props.value);
+  const index = steps.indexOf(props.value);
+  const currentIndex = index === -1 ? 0 : index;
 
   const handleIncrement = () => {
     const nextIndex = currentIndex + 1;
@@ -61,7 +59,7 @@ function NumberInput<T extends number, D extends T>(
         </button>
 
         <span class="flex-1 bg-transparent text-white font-mono text-lg text-center py-3 pl-3 pr-3">
-          {props.value || props.default}
+          {props.value}
         </span>
 
         <button

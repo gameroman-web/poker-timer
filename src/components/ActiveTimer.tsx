@@ -1,4 +1,4 @@
-import { createEffect, createSignal, onCleanup } from "solid-js";
+import { createSignal, onCleanup, onMount } from "solid-js";
 import { formatTime } from "../lib/format-time";
 
 interface ActiveTimerProps {
@@ -14,7 +14,7 @@ function ActiveTimer(props: ActiveTimerProps) {
 
   let interval: number | undefined;
 
-  createEffect(() => {
+  onMount(() => {
     setTimeLeft(props.timePerRound);
     setCurrentLevel(1);
     setIsRunning(false);
