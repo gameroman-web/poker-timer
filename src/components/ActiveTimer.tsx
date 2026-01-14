@@ -1,29 +1,24 @@
 import { createEffect, createSignal, onCleanup } from "solid-js";
+import { formatTime } from "../lib/format-time";
 
 interface ActiveTimerProps {
-  initialTime: number;
-  blindLevels: Array<{ sb: number; bb: number; time: number }>;
-  onBackToSetup: () => void;
+  timePerRound: number;
+  blindLevels: number[];
+  onBackToSetup(): void;
 }
 
-const ActiveTimer = (props: ActiveTimerProps) => {
-  const [timeLeft, setTimeLeft] = createSignal(props.initialTime);
+function ActiveTimer(props: ActiveTimerProps) {
+  const [timeLeft, setTimeLeft] = createSignal(props.timePerRound);
   const [isRunning, setIsRunning] = createSignal(false);
   const [currentLevel, setCurrentLevel] = createSignal(1);
 
   let interval: number | undefined;
 
   createEffect(() => {
-    setTimeLeft(props.initialTime);
+    setTimeLeft(props.timePerRound);
     setCurrentLevel(1);
     setIsRunning(false);
   });
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
-  };
 
   const startTimer = () => {
     if (!isRunning()) {
@@ -32,8 +27,7 @@ const ActiveTimer = (props: ActiveTimerProps) => {
         setTimeLeft((prev) => {
           if (prev <= 1) {
             nextLevel();
-            const nextTime =
-              props.blindLevels[currentLevel()]?.time || props.initialTime;
+            const nextTime = props.timePerRound;
             return nextTime;
           }
           return prev - 1;
@@ -60,9 +54,7 @@ const ActiveTimer = (props: ActiveTimerProps) => {
   const resetTimer = () => {
     setIsRunning(false);
     clearInterval(interval);
-    setTimeLeft(
-      props.blindLevels[currentLevel() - 1]?.time ?? props.initialTime,
-    );
+    setTimeLeft(props.timePerRound);
   };
 
   onCleanup(() => {
@@ -95,7 +87,7 @@ const ActiveTimer = (props: ActiveTimerProps) => {
                 Small Blind
               </div>
               <div class="text-3xl font-bold text-yellow-400">
-                ${currentBlindLevel?.sb || 0}
+                ${currentBlindLevel || 0}
               </div>
             </div>
             <div class="bg-linear-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
@@ -103,18 +95,13 @@ const ActiveTimer = (props: ActiveTimerProps) => {
                 Big Blind
               </div>
               <div class="text-3xl font-bold text-orange-400">
-                ${currentBlindLevel?.bb || 0}
+                ${(currentBlindLevel || 0) * 2}
               </div>
             </div>
           </div>
 
           <div class="flex justify-between items-center text-sm text-gray-400 mb-4">
-            <span>
-              Round Duration: {Math.floor((currentBlindLevel?.time || 0) / 60)}:
-              {((currentBlindLevel?.time || 0) % 60)
-                .toString()
-                .padStart(2, "0")}
-            </span>
+            <span>{formatTime(props.timePerRound)}</span>
             <span
               classList={{
                 "text-green-400": isRunning(),
@@ -235,6 +222,6 @@ const ActiveTimer = (props: ActiveTimerProps) => {
       )}
     </div>
   );
-};
+}
 
 export default ActiveTimer;

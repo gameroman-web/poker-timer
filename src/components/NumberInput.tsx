@@ -1,19 +1,21 @@
-interface NumberInputProps<T extends number> {
+interface NumberInputProps<T extends number, D extends T> {
   value: number;
-  onChange: (value: number) => void;
-  steps: T[];
-  default: T;
+  onChange(value: number): void;
+  values: T[];
+  default: D;
   label: string;
 }
 
-function NumberInput<T extends number>(props: NumberInputProps<T>) {
-  const steps: (T | number)[] = props.steps;
+function NumberInput<T extends number, D extends T>(
+  props: NumberInputProps<T, D>,
+) {
+  const steps: number[] = props.values;
   const currentIndex = steps.indexOf(props.value);
 
   const handleIncrement = () => {
     const nextIndex = currentIndex + 1;
-    if (nextIndex < props.steps.length) {
-      const newValue = props.steps[nextIndex];
+    if (nextIndex < props.values.length) {
+      const newValue = props.values[nextIndex];
       if (newValue !== undefined) {
         props.onChange(newValue);
       }
@@ -23,7 +25,7 @@ function NumberInput<T extends number>(props: NumberInputProps<T>) {
   const handleDecrement = () => {
     const prevIndex = currentIndex - 1;
     if (prevIndex >= 0) {
-      const newValue = props.steps[prevIndex];
+      const newValue = props.values[prevIndex];
       if (newValue !== undefined) {
         props.onChange(newValue);
       }
@@ -35,6 +37,7 @@ function NumberInput<T extends number>(props: NumberInputProps<T>) {
       <label class="block text-sm font-semibold text-yellow-400 mb-2">
         {props.label}
       </label>
+
       <div class="flex items-center bg-gray-900 border-2 border-gray-700 rounded-xl overflow-hidden focus-within:border-yellow-400 focus-within:ring-2 focus-within:ring-yellow-400/20 transition-all">
         <button
           type="button"
@@ -64,7 +67,7 @@ function NumberInput<T extends number>(props: NumberInputProps<T>) {
         <button
           type="button"
           onClick={handleIncrement}
-          disabled={currentIndex >= props.steps.length - 1}
+          disabled={currentIndex >= props.values.length - 1}
           class="px-3 py-3 text-gray-400 hover:text-white hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors touch-manipulation"
         >
           <svg

@@ -1,39 +1,18 @@
+import { getBlindLevels } from "../lib/blind-levels";
+import { formatTime } from "../lib/format-time";
 import NumberInput from "./NumberInput";
 
 interface TimerSetupProps {
-  minFirstRound: () => number;
-  numberOfRounds: () => number;
-  timerPerRound: () => number;
-  setMinFirstRound: (value: number) => void;
-  setNumberOfRounds: (value: number) => void;
-  setTimerPerRound: (value: number) => void;
-  onStartTimer: () => void;
+  minFirstRound(): number;
+  numberOfRounds(): number;
+  timerPerRound(): number;
+  setMinFirstRound(value: number): void;
+  setNumberOfRounds(value: number): void;
+  setTimerPerRound(value: number): void;
+  onStartTimer(): void;
 }
 
-const TimerSetup = (props: TimerSetupProps) => {
-  const generateBlindLevels = () => {
-    const levels = [];
-    let currentSmall = props.minFirstRound();
-
-    for (let i = 0; i < props.numberOfRounds(); i++) {
-      levels.push({
-        sb: currentSmall,
-        bb: currentSmall * 2,
-        time: props.timerPerRound(),
-      });
-
-      if (i % 2 === 1) {
-        currentSmall = Math.round(currentSmall * 1.5);
-      } else if (i % 3 === 2) {
-        currentSmall = currentSmall * 2;
-      }
-    }
-
-    return levels;
-  };
-
-  const blindLevels = generateBlindLevels();
-
+function TimerSetup(props: TimerSetupProps) {
   return (
     <div class="w-full max-w-lg mx-auto">
       <div class="text-center mb-8">
@@ -47,7 +26,7 @@ const TimerSetup = (props: TimerSetupProps) => {
             <NumberInput
               value={props.minFirstRound()}
               onChange={props.setMinFirstRound}
-              steps={[1, 5, 10, 25, 50, 100]}
+              values={[1, 5, 10, 25, 50, 100]}
               default={10}
               label="Minimum First Round"
             />
@@ -57,7 +36,7 @@ const TimerSetup = (props: TimerSetupProps) => {
             <NumberInput
               value={props.numberOfRounds()}
               onChange={props.setNumberOfRounds}
-              steps={Array.from({ length: 50 }, (_, i) => i + 1)}
+              values={[7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]}
               default={12}
               label="Number of Rounds"
             />
@@ -67,7 +46,7 @@ const TimerSetup = (props: TimerSetupProps) => {
             <NumberInput
               value={Math.floor(props.timerPerRound() / 60)}
               onChange={(value) => props.setTimerPerRound(value * 60)}
-              steps={[5, 10, 15]}
+              values={[5, 10, 15]}
               default={15}
               label="Timer Per Round (minutes)"
             />
@@ -80,17 +59,19 @@ const TimerSetup = (props: TimerSetupProps) => {
           Blind Structure Preview
         </div>
         <div class="space-y-2 max-h-60 overflow-y-auto hide-scrollbar">
-          {blindLevels.map((level, index) => (
+          {getBlindLevels({
+            first: props.minFirstRound(),
+            rounds: props.numberOfRounds(),
+          }).map((level, index) => (
             <div class="flex justify-between items-center bg-gray-900/50 rounded-lg px-4 py-2 border border-gray-700">
               <span class="text-green-300 font-medium">Level {index + 1}</span>
               <div class="text-white font-mono">
-                <span class="text-yellow-400">${level.sb}</span>
+                <span class="text-yellow-400">${level}</span>
                 {" / "}
-                <span class="text-orange-400">${level.bb}</span>
+                <span class="text-orange-400">${level * 2}</span>
               </div>
               <span class="text-gray-400 text-sm">
-                {Math.floor(level.time / 60)}:
-                {(level.time % 60).toString().padStart(2, "0")}
+                {formatTime(props.timerPerRound())}
               </span>
             </div>
           ))}
@@ -125,6 +106,6 @@ const TimerSetup = (props: TimerSetupProps) => {
       </button>
     </div>
   );
-};
+}
 
 export default TimerSetup;
