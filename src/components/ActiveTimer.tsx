@@ -121,7 +121,7 @@ function ActiveTimer(props: ActiveTimerProps) {
       <div class="grid grid-cols-2 gap-3 mb-6">
         <button
           type="button"
-          onClick={isRunning() ? pauseTimer : startTimer}
+          onClick={() => (isRunning() ? pauseTimer() : startTimer())}
           classList={{
             "bg-red-600 hover:bg-red-500": isRunning(),
             "bg-green-600 hover:bg-green-500": !isRunning(),
