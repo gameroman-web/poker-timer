@@ -82,7 +82,7 @@ function ActiveTimer(props: ActiveTimerProps) {
           </div>
 
           <div class="grid grid-cols-2 gap-4 mb-6">
-            <div class="bg-linear-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
+            <div class="bg-gray-900 rounded-2xl p-4 border border-gray-700">
               <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Small Blind
               </div>
@@ -90,7 +90,7 @@ function ActiveTimer(props: ActiveTimerProps) {
                 ${currentBlindLevel || 0}
               </div>
             </div>
-            <div class="bg-linear-to-br from-gray-900 to-black rounded-2xl p-4 border border-gray-700">
+            <div class="bg-gray-900 rounded-2xl p-4 border border-gray-700">
               <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Big Blind
               </div>
@@ -119,10 +119,8 @@ function ActiveTimer(props: ActiveTimerProps) {
           type="button"
           onClick={isRunning() ? pauseTimer : startTimer}
           classList={{
-            "bg-gradient-to-r from-red-600 to-red-500 hover:from-red-500 hover:to-red-400":
-              isRunning(),
-            "bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400":
-              !isRunning(),
+            "bg-red-600 hover:bg-red-500": isRunning(),
+            "bg-green-600 hover:bg-green-500": !isRunning(),
           }}
           class="text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
         >
@@ -172,7 +170,7 @@ function ActiveTimer(props: ActiveTimerProps) {
         <button
           type="button"
           onClick={resetTimer}
-          class="bg-linear-to-r from-gray-600 to-gray-500 hover:from-gray-500 hover:to-gray-400 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
+          class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
         >
           <svg
             class="w-6 h-6 mr-2"
@@ -213,7 +211,7 @@ function ActiveTimer(props: ActiveTimerProps) {
       </button>
 
       {currentLevel() > props.blindLevels.length && (
-        <div class="mt-6 bg-linear-to-r from-yellow-600 to-orange-600 rounded-xl p-4 text-center">
+        <div class="mt-6 bg-yellow-600 rounded-xl p-4 text-center">
           <div class="text-white font-bold text-lg">Tournament Complete!</div>
           <div class="text-yellow-100 text-sm">
             All levels have been completed

@@ -18,7 +18,7 @@ function PokerTimer() {
   };
 
   return (
-    <div class="min-h-screen bg-linear-to-br from-green-900 via-green-800 to-green-900 text-white flex flex-col items-center justify-center p-4 safe-area">
+    <div class="min-h-screen bg-green-800 text-white flex flex-col items-center justify-center p-4 safe-area">
       {currentPage() === "setup" ? (
         <TimerSetup
           minFirstRound={minFirstRound}
