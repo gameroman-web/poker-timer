@@ -48,8 +48,38 @@ describe("getBlindLevels", () => {
   });
 
   it("should always be a multiple of the 1st round", () => {
-    expect(getBlindLevels({ first: 25, rounds: 20 })).toSatisfy((arr) =>
+    expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
       arr.every((v) => v % 25 === 0),
+    );
+  });
+
+  it("is a multiple of on of the 4 before it", () => {
+    expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
+      arr.every((v, i, a) => {
+        if (i === 0) return true;
+        const threeBefore = a.slice(i - 4 < 0 ? 0 : i - 4, i);
+        return threeBefore.some((v2) => v % v2 === 0);
+      }),
+    );
+  });
+
+  it("is bigger than the one before it", () => {
+    expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
+      arr.every((v, i) => {
+        const prev = arr[i - 1];
+        if (prev === undefined) return true;
+        return v > prev;
+      }),
+    );
+  });
+
+  it("is not bigger than twice the one before it", () => {
+    expect(getBlindLevels({ first: 25, rounds: 25 })).toSatisfy((arr) =>
+      arr.every((v, i) => {
+        const prev = arr[i - 1];
+        if (prev === undefined) return true;
+        return v <= prev * 2;
+      }),
     );
   });
 });
