@@ -1,9 +1,9 @@
 import { defaultCache } from "@serwist/astro/worker";
 import {
-  RuntimeCache,
   addEventListeners,
   createSerwist,
   type PrecacheEntry,
+  RuntimeCache,
 } from "serwist";
 
 declare global {
