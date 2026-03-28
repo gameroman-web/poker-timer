@@ -32,7 +32,10 @@ function NumberInput(props: NumberInputProps) {
 
   return (
     <div>
-      <label class="block text-sm font-semibold text-yellow-400 mb-2">
+      <label
+        class="block text-sm font-semibold text-yellow-400 mb-2"
+        for={props.label}
+      >
         {props.label}
       </label>
 
@@ -48,6 +51,7 @@ function NumberInput(props: NumberInputProps) {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               stroke-linecap="round"
@@ -75,6 +79,7 @@ function NumberInput(props: NumberInputProps) {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               stroke-linecap="round"
