@@ -1,19 +1,28 @@
-import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { Serwist } from "serwist";
+import { defaultCache } from "@serwist/astro/worker";
+import {
+  addEventListeners,
+  createSerwist,
+  type PrecacheEntry,
+  RuntimeCache,
+} from "serwist";
 
 declare global {
-  interface WorkerGlobalScope extends SerwistGlobalConfig {
+  interface WorkerGlobalScope {
     __SW_MANIFEST: (PrecacheEntry | string)[] | undefined;
   }
 }
 
 declare const self: ServiceWorkerGlobalScope;
 
-const serwist = new Serwist({
-  precacheEntries: self.__SW_MANIFEST || [],
+const serwist = createSerwist({
+  precache: {
+    entries: self.__SW_MANIFEST,
+    cleanupOutdatedCaches: true,
+    concurrency: 10,
+  },
   skipWaiting: true,
   clientsClaim: true,
-  navigationPreload: true,
+  extensions: [new RuntimeCache(defaultCache)],
 });
 
-serwist.addEventListeners();
+addEventListeners(serwist);
