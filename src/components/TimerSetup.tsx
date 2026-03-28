@@ -1,5 +1,5 @@
-import { getBlindLevels } from "../lib/blind-levels";
-import { formatTime } from "../lib/format-time";
+import { getBlindLevels } from "#lib/blind-levels";
+import { formatTime } from "#lib/format-time";
 import NumberInput from "./NumberInput";
 
 interface TimerSetupProps {

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 
-import { formatTime } from "../lib/format-time";
+import { formatTime } from "#lib/format-time";
 
 describe("getBlindLevels", () => {
   it("should return correctly formatted time", () => {

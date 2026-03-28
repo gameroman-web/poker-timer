@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 
-import { getBlindLevels } from "../lib/blind-levels";
+import { getBlindLevels } from "#lib/blind-levels";
 
 describe("getBlindLevels", () => {
   it("should correctly return for the 1st round", () => {
