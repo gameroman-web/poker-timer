@@ -22,7 +22,6 @@
     },
   },
   "overrides": {
-    "ci-info": "latest",
     "esbuild": "^0.27.3",
     "glob": "^13.0.0",
     "unstorage": "2.0.0-alpha.7",
