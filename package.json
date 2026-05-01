@@ -28,7 +28,7 @@
     "@gameroman/config": "0.0.7",
     "@serwist/astro": "^10.0.0-preview.14",
     "@tailwindcss/vite": "^4.2.2",
-    "@types/bun": "1.3.12",
+    "@types/bun": "1.3.13",
     "typescript": "6.0.3",
     "wrangler": "4.83.0"
   },
