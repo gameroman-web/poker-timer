@@ -18,24 +18,27 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "astro": "6.1.7",
+    "astro": "6.2.2",
     "solid-js": "1.9.12",
-    "tailwindcss": "4.2.2"
+    "tailwindcss": "4.2.4"
   },
   "devDependencies": {
-    "@astrojs/solid-js": "^6.0.1",
-    "@biomejs/biome": "2.4.12",
+    "@astrojs/solid-js": "6.0.1",
+    "@biomejs/biome": "2.4.14",
     "@gameroman/config": "0.1.0",
-    "@serwist/astro": "^10.0.0-preview.14",
-    "@tailwindcss/vite": "^4.2.2",
-    "@types/bun": "1.3.12",
+    "@serwist/astro": "10.0.0-preview.14",
+    "@tailwindcss/vite": "4.2.4",
+    "@types/bun": "1.3.13",
     "typescript": "6.0.3",
-    "wrangler": "4.83.0"
+    "wrangler": "4.88.0"
   },
   "overrides": {
-    "esbuild": "^0.27.3",
+    "@babel/helper-module-imports": "7.27.1",
+    "esbuild": "0.28.0",
+    "glob": "13.0.0",
+    "is-docker": "4.0.0",
+    "semver": "7.7.4",
     "unstorage": "2.0.0-alpha.7",
-    "glob": "^13.0.0",
-    "zod": "latest"
+    "zod": "4.4.3"
   }
 }
