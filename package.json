@@ -35,7 +35,7 @@
   "overrides": {
     "@babel/helper-module-imports": "7.27.1",
     "esbuild": "0.28.0",
-    "glob": "13.0.0",
+    "glob": "13.0.6",
     "is-docker": "4.0.0",
     "semver": "7.7.4",
     "unstorage": "2.0.0-alpha.7",
