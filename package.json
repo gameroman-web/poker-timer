@@ -18,7 +18,7 @@
     "deploy": "wrangler deploy"
   },
   "dependencies": {
-    "astro": "6.3.3",
+    "astro": "6.3.7",
     "solid-js": "1.9.13",
     "tailwindcss": "4.3.0"
   },
