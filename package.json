@@ -14,7 +14,8 @@
     "dev": "astro dev",
     "format": "biome check --write",
     "lint": "biome check",
-    "test": "bun test",
+    "test": "bun test -u",
+    "test:ci": "bun test",
     "typecheck": "tsc --noEmit"
   },
   "overrides": {

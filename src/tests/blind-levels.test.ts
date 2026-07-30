@@ -23,43 +23,114 @@ describe("getBlindLevels", () => {
     expect(getBlindLevels({ first: 25, rounds: 4 })).toEqual([25, 50, 75, 100]);
   });
 
-  it("should correctly calculate for the 5th round", () => {
-    expect(getBlindLevels({ first: 25, rounds: 5 })).toEqual([
-      25, 50, 75, 100, 150,
-    ]);
+  it("should have up-to-date snapshots", () => {
+    expect(getBlindLevels({ first: 25, rounds: 5 })).toMatchInlineSnapshot(`
+      [
+        25,
+        50,
+        75,
+        100,
+        150,
+      ]
+    `);
+    expect(getBlindLevels({ first: 25, rounds: 6 })).toMatchInlineSnapshot(`
+      [
+        25,
+        50,
+        75,
+        100,
+        150,
+        200,
+      ]
+    `);
+    expect(getBlindLevels({ first: 25, rounds: 10 })).toMatchInlineSnapshot(`
+      [
+        25,
+        50,
+        75,
+        100,
+        150,
+        200,
+        300,
+        500,
+        800,
+        1000,
+      ]
+    `);
+    expect(getBlindLevels({ first: 25, rounds: 13 })).toMatchInlineSnapshot(`
+      [
+        25,
+        50,
+        75,
+        100,
+        150,
+        200,
+        300,
+        500,
+        800,
+        1000,
+        1500,
+        2000,
+        3000,
+      ]
+    `);
+    expect(getBlindLevels({ first: 25, rounds: 15 })).toMatchInlineSnapshot(`
+      [
+        25,
+        50,
+        75,
+        100,
+        150,
+        200,
+        300,
+        500,
+        800,
+        1000,
+        1500,
+        2000,
+        3000,
+        3800,
+        4800,
+      ]
+    `);
+    expect(getBlindLevels({ first: 25, rounds: 20 })).toMatchInlineSnapshot(`
+      [
+        25,
+        50,
+        75,
+        100,
+        150,
+        200,
+        300,
+        500,
+        800,
+        1000,
+        1500,
+        2000,
+        3000,
+        3800,
+        4800,
+        6300,
+        8300,
+        11300,
+        14300,
+        18100,
+      ]
+    `);
   });
 
-  it("should correctly calculate for the 6th round", () => {
-    expect(getBlindLevels({ first: 25, rounds: 6 })).toEqual([
-      25, 50, 75, 100, 150, 200,
-    ]);
-  });
+  const FIRST_ROUNDS = [5, 10, 25, 50, 100];
 
-  it("should correctly calculate for 10 rounds", () => {
-    expect(getBlindLevels({ first: 25, rounds: 10 })).toEqual([
-      25, 50, 75, 100, 150, 200, 300, 500, 800, 1000,
-    ]);
-  });
-
-  it("should correctly calculate for 13 rounds", () => {
-    expect(getBlindLevels({ first: 25, rounds: 13 })).toEqual([
-      25, 50, 75, 100, 150, 200, 300, 500, 800, 1000, 1500, 2000, 3000,
-    ]);
-  });
-
-  it("should always be a multiple of the 1st round", () => {
-    const expectMultipleOfFirstRound = (first: number) =>
+  it.each(FIRST_ROUNDS)(
+    "should always be a multiple of the 1st round",
+    (first) => {
       expect(getBlindLevels({ first, rounds: 40 })).toSatisfy((arr) =>
         arr.every((v) => v % first === 0),
       );
-    expectMultipleOfFirstRound(5);
-    expectMultipleOfFirstRound(10);
-    expectMultipleOfFirstRound(25);
-    expectMultipleOfFirstRound(50);
-    expectMultipleOfFirstRound(100);
-  });
+    },
+  );
 
-  it("is bigger than the one before it", () => {
+  it.each(FIRST_ROUNDS)("is bigger than the one before it", (first) => {
     const isBiggerThanOneBeforeIt = (arr: number[]) =>
       arr.every((v, i) => {
         const prev = arr[i - 1];
@@ -67,60 +138,42 @@ describe("getBlindLevels", () => {
         return v > prev;
       });
 
-    expect(getBlindLevels({ first: 5, rounds: 40 })).toSatisfy(
-      isBiggerThanOneBeforeIt,
-    );
-    expect(getBlindLevels({ first: 10, rounds: 40 })).toSatisfy(
-      isBiggerThanOneBeforeIt,
-    );
-    expect(getBlindLevels({ first: 25, rounds: 40 })).toSatisfy(
-      isBiggerThanOneBeforeIt,
-    );
-    expect(getBlindLevels({ first: 50, rounds: 40 })).toSatisfy(
-      isBiggerThanOneBeforeIt,
-    );
-    expect(getBlindLevels({ first: 100, rounds: 40 })).toSatisfy(
+    expect(getBlindLevels({ first, rounds: 40 })).toSatisfy(
       isBiggerThanOneBeforeIt,
     );
   });
 
-  it("is not bigger than twice the one before it", () => {
-    expect(getBlindLevels({ first: 25, rounds: 40 })).toSatisfy((arr) =>
-      arr.every((v, i) => {
-        const prev = arr[i - 1];
-        if (prev === undefined) return true;
-        return v <= prev * 2;
-      }),
-    );
-  });
+  it.each(FIRST_ROUNDS)(
+    "is not bigger than twice the one before it",
+    (first) => {
+      expect(getBlindLevels({ first, rounds: 40 })).toSatisfy((arr) =>
+        arr.every((v, i) => {
+          const prev = arr[i - 1];
+          if (prev === undefined) return true;
+          return v <= prev * 2;
+        }),
+      );
+    },
+  );
 
-  it("should have a difference that is one of the previous numbers", () => {
-    const isDifferenceOfPrevious = (arr: number[]) =>
-      arr.every((v, i) => {
-        const prev = arr[i - 1];
-        if (prev === undefined) return true;
-        const difference = v - prev;
-        return arr.slice(0, i).includes(difference);
-      });
+  it.each(FIRST_ROUNDS)(
+    "should have a difference that is one of the previous numbers",
+    (first) => {
+      const isDifferenceOfPrevious = (arr: number[]) =>
+        arr.every((v, i) => {
+          const prev = arr[i - 1];
+          if (prev === undefined) return true;
+          const difference = v - prev;
+          return arr.slice(0, i).includes(difference);
+        });
 
-    expect(getBlindLevels({ first: 5, rounds: 40 })).toSatisfy(
-      isDifferenceOfPrevious,
-    );
-    expect(getBlindLevels({ first: 10, rounds: 40 })).toSatisfy(
-      isDifferenceOfPrevious,
-    );
-    expect(getBlindLevels({ first: 25, rounds: 40 })).toSatisfy(
-      isDifferenceOfPrevious,
-    );
-    expect(getBlindLevels({ first: 50, rounds: 40 })).toSatisfy(
-      isDifferenceOfPrevious,
-    );
-    expect(getBlindLevels({ first: 100, rounds: 40 })).toSatisfy(
-      isDifferenceOfPrevious,
-    );
-  });
+      expect(getBlindLevels({ first, rounds: 40 })).toSatisfy(
+        isDifferenceOfPrevious,
+      );
+    },
+  );
 
-  it("should always increase by more than 25%", () => {
+  it.each(FIRST_ROUNDS)("should always increase by more than 25%", (first) => {
     const isIncreaseAtLeast25percent = (arr: number[]) =>
       arr.every((v, i) => {
         const prev = arr[i - 1];
@@ -129,20 +182,18 @@ describe("getBlindLevels", () => {
         return difference >= 1.25;
       });
 
-    expect(getBlindLevels({ first: 5, rounds: 40 })).toSatisfy(
-      isIncreaseAtLeast25percent,
-    );
-    expect(getBlindLevels({ first: 10, rounds: 40 })).toSatisfy(
-      isIncreaseAtLeast25percent,
-    );
-    expect(getBlindLevels({ first: 25, rounds: 40 })).toSatisfy(
-      isIncreaseAtLeast25percent,
-    );
-    expect(getBlindLevels({ first: 50, rounds: 40 })).toSatisfy(
-      isIncreaseAtLeast25percent,
-    );
-    expect(getBlindLevels({ first: 100, rounds: 40 })).toSatisfy(
+    expect(getBlindLevels({ first, rounds: 40 })).toSatisfy(
       isIncreaseAtLeast25percent,
     );
   });
+
+  it.each(FIRST_ROUNDS)(
+    "should have no more than 2 significant figures",
+    (first) => {
+      const hasMaxTwoSigFigs = (arr: number[]) =>
+        arr.every((v) => Number(v.toPrecision(2)) === v);
+
+      expect(getBlindLevels({ first, rounds: 40 })).toSatisfy(hasMaxTwoSigFigs);
+    },
+  );
 });
