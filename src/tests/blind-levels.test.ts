@@ -4,12 +4,14 @@ import { getBlindLevels } from "#lib/blind-levels";
 
 describe("getBlindLevels", () => {
   it("should correctly return for the 1st round", () => {
+    expect(getBlindLevels({ first: 1, rounds: 1 })).toEqual([1]);
     expect(getBlindLevels({ first: 5, rounds: 1 })).toEqual([5]);
     expect(getBlindLevels({ first: 10, rounds: 1 })).toEqual([10]);
     expect(getBlindLevels({ first: 25, rounds: 1 })).toEqual([25]);
   });
 
   it("should correctly double for the 2nd round", () => {
+    expect(getBlindLevels({ first: 1, rounds: 2 })).toEqual([1, 2]);
     expect(getBlindLevels({ first: 5, rounds: 2 })).toEqual([5, 10]);
     expect(getBlindLevels({ first: 10, rounds: 2 })).toEqual([10, 20]);
     expect(getBlindLevels({ first: 25, rounds: 2 })).toEqual([25, 50]);
@@ -22,6 +24,93 @@ describe("getBlindLevels", () => {
   });
 
   it("should have up-to-date snapshots", () => {
+    expect(getBlindLevels({ first: 1, rounds: 25 })).toMatchInlineSnapshot(`
+      [
+        1,
+        2,
+        3,
+        4,
+        6,
+        8,
+        10,
+        15,
+        20,
+        30,
+        40,
+        60,
+        80,
+        100,
+        150,
+        200,
+        300,
+        400,
+        600,
+        800,
+        1000,
+        1500,
+        2000,
+        3000,
+        4000,
+      ]
+    `);
+    expect(getBlindLevels({ first: 5, rounds: 25 })).toMatchInlineSnapshot(`
+      [
+        5,
+        10,
+        15,
+        20,
+        30,
+        40,
+        60,
+        80,
+        100,
+        150,
+        200,
+        300,
+        400,
+        600,
+        800,
+        1000,
+        1500,
+        2000,
+        3000,
+        4000,
+        6000,
+        8000,
+        10000,
+        15000,
+        20000,
+      ]
+    `);
+    expect(getBlindLevels({ first: 10, rounds: 25 })).toMatchInlineSnapshot(`
+      [
+        10,
+        20,
+        30,
+        40,
+        60,
+        80,
+        100,
+        150,
+        200,
+        300,
+        400,
+        600,
+        800,
+        1000,
+        1500,
+        2000,
+        3000,
+        4000,
+        6000,
+        8000,
+        10000,
+        15000,
+        20000,
+        30000,
+        40000,
+      ]
+    `);
     expect(getBlindLevels({ first: 25, rounds: 25 })).toMatchInlineSnapshot(`
       [
         25,
@@ -53,7 +142,7 @@ describe("getBlindLevels", () => {
     `);
   });
 
-  const FIRST_ROUNDS = [5, 10, 25, 50, 100];
+  const FIRST_ROUNDS = [1, 5, 10, 25, 50, 100];
 
   it.each(FIRST_ROUNDS)(
     "should always be a multiple of the 1st round",

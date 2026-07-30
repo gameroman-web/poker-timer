@@ -36,7 +36,7 @@ export function getBlindLevels({
 
     const candidates = [5 / 4, 4 / 3, 3 / 2, 2 / 1]
       .map((m) => Math.round(prev * m))
-      .filter((c) => c % first === 0 && isValidLevel(c));
+      .filter((c) => c > prev && c % first === 0 && isValidLevel(c));
 
     const targetSig = PREFERRED_TRANSITIONS[getSigDigits(prev)];
     const preferred = candidates.find((c) => getSigDigits(c) === targetSig);
