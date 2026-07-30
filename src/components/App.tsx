@@ -8,7 +8,7 @@ type Page = "setup" | "timer";
 function PokerTimer() {
   const [currentPage, setCurrentPage] = createSignal<Page>("setup");
   const [minFirstRound, setMinFirstRound] = createSignal(25);
-  const [numberOfRounds, setNumberOfRounds] = createSignal(13);
+  const [numberOfRounds, setNumberOfRounds] = createSignal(14);
   const [timerPerRound, setTimerPerRound] = createSignal(900);
 
   return (
