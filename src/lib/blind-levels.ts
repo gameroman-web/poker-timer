@@ -1,55 +1,47 @@
+const PREFERRED_TRANSITIONS: Record<string, string> = {
+  "10": "15",
+  "15": "20",
+  "20": "30",
+  "25": "50",
+  "30": "40",
+  "40": "60",
+  "50": "75",
+  "60": "80",
+  "75": "100",
+  "80": "100",
+};
+
+function getSigDigits(num: number): string {
+  return num.toPrecision(2).split("e")[0]?.replace(".", "") ?? "";
+}
+
+function isValidLevel(num: number): boolean {
+  if (num < 100) return true;
+  if (Number(num.toPrecision(2)) !== num) return false;
+  const sig = getSigDigits(num);
+  return sig in PREFERRED_TRANSITIONS || sig === "80";
+}
+
 export function getBlindLevels({
   first,
   rounds,
 }: {
   first: number;
   rounds: number;
-}) {
-  const levels = [];
-  let currentSmall = first;
+}): number[] {
+  const levels: number[] = [first];
 
-  const getMultiplier = (roundIndex: number): number => {
-    if (roundIndex < 3) return 1;
+  for (let i = 1; i < rounds; i++) {
+    const prev = levels[i - 1] ?? first;
 
-    const patterns = [
-      { start: 3, end: 4, multiplier: 2 },
-      { start: 5, end: 5, multiplier: 4 },
-      { start: 6, end: 6, multiplier: 8 },
-      { start: 7, end: 7, multiplier: 12 },
-      { start: 8, end: 8, multiplier: 8 },
-      { start: 9, end: 10, multiplier: 20 },
-      { start: 11, end: 11, multiplier: 40 },
-    ];
+    const candidates = [5 / 4, 4 / 3, 3 / 2, 2 / 1]
+      .map((m) => Math.round(prev * m))
+      .filter((c) => c > prev && c % first === 0 && isValidLevel(c));
 
-    for (const pattern of patterns) {
-      if (roundIndex >= pattern.start && roundIndex <= pattern.end) {
-        return pattern.multiplier;
-      }
-    }
+    const targetSig = PREFERRED_TRANSITIONS[getSigDigits(prev)];
+    const preferred = candidates.find((c) => getSigDigits(c) === targetSig);
 
-    return 40;
-  };
-
-  for (let i = 0; i < rounds; i++) {
-    levels.push(currentSmall);
-
-    if (i === rounds - 1) break;
-
-    let increase: number;
-
-    if (i < 12) {
-      increase = first * getMultiplier(i);
-    } else {
-      const minIncrease = Math.ceil(currentSmall * 0.25);
-      const validIncreases = levels.filter((v) => v >= minIncrease);
-      const fallbackIncrease = first * 40;
-      increase =
-        validIncreases.length > 0
-          ? Math.min(...validIncreases)
-          : fallbackIncrease;
-    }
-
-    currentSmall = currentSmall + increase;
+    levels.push(preferred ?? Math.min(...candidates));
   }
 
   return levels;
