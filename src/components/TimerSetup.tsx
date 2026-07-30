@@ -67,7 +67,7 @@ function TimerSetup(props: TimerSetupProps) {
                 {" / "}
                 <span class="text-orange-400">${level * 2}</span>
               </div>
-              <span class="text-gray-400 text-sm">
+              <span class="text-gray-300 text-sm">
                 {formatTime(props.timerPerRound())}
               </span>
             </div>
@@ -78,7 +78,7 @@ function TimerSetup(props: TimerSetupProps) {
       <button
         type="button"
         onClick={props.onStartTimer}
-        class="cursor-pointer w-full bg-green-600 hover:bg-green-500 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center space-x-2"
+        class="cursor-pointer w-full bg-green-700 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center space-x-2"
       >
         <svg
           class="w-6 h-6"
