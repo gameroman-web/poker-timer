@@ -8,6 +8,7 @@ const PREFERRED_TRANSITIONS: Record<string, string> = {
   "50": "75",
   "60": "80",
   "75": "100",
+  "80": "100",
 };
 
 function getSigDigits(num: number): string {
@@ -33,7 +34,7 @@ export function getBlindLevels({
   for (let i = 1; i < rounds; i++) {
     const prev = levels[i - 1] ?? first;
 
-    const candidates = [1.25, 4 / 3, 1.5, 1.6, 1.75, 2.0]
+    const candidates = [5 / 4, 4 / 3, 3 / 2, 2 / 1]
       .map((m) => Math.round(prev * m))
       .filter((c) => c % first === 0 && isValidLevel(c));
 

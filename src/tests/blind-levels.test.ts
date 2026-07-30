@@ -64,45 +64,27 @@ describe("getBlindLevels", () => {
     },
   );
 
-  it.each(FIRST_ROUNDS)("is bigger than the one before it", (first) => {
-    const isBiggerThanOneBeforeIt = (arr: number[]) =>
-      arr.every((v, i) => {
-        const prev = arr[i - 1];
-        if (prev === undefined) return true;
-        return v > prev;
-      });
-
-    expect(getBlindLevels({ first, rounds: 50 })).toSatisfy(
-      isBiggerThanOneBeforeIt,
-    );
-  });
+  const ALLOWED_MULTIPLIERS = new Set([5 / 4, 4 / 3, 3 / 2, 2 / 1]);
 
   it.each(FIRST_ROUNDS)(
-    "is not bigger than twice the one before it",
+    "should only use allowed multipliers (5/4, 4/3, 3/2, 2/1)",
     (first) => {
-      expect(getBlindLevels({ first, rounds: 50 })).toSatisfy((arr) =>
+      const hasOnlyAllowedMultipliers = (arr: number[]) =>
         arr.every((v, i) => {
           const prev = arr[i - 1];
           if (prev === undefined) return true;
-          return v <= prev * 2;
-        }),
+
+          const ratio = v / prev;
+          return Array.from(ALLOWED_MULTIPLIERS).some(
+            (allowed) => Math.abs(ratio - allowed) < 1e-6,
+          );
+        });
+
+      expect(getBlindLevels({ first, rounds: 50 })).toSatisfy(
+        hasOnlyAllowedMultipliers,
       );
     },
   );
-
-  it.each(FIRST_ROUNDS)("should always increase by at least 25%", (first) => {
-    const isIncreaseAtLeast25percent = (arr: number[]) =>
-      arr.every((v, i) => {
-        const prev = arr[i - 1];
-        if (prev === undefined) return true;
-        const difference = v / prev;
-        return difference >= 1.25;
-      });
-
-    expect(getBlindLevels({ first, rounds: 50 })).toSatisfy(
-      isIncreaseAtLeast25percent,
-    );
-  });
 
   it.each(FIRST_ROUNDS)(
     "should have no more than 2 significant figures",
