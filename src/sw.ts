@@ -1,6 +1,10 @@
 import { defaultCache } from "@serwist/astro/worker";
-import type { PrecacheEntry } from "serwist";
-import { addEventListeners, createSerwist, RuntimeCache } from "serwist";
+import {
+  addEventListeners,
+  createSerwist,
+  type PrecacheEntry,
+  RuntimeCache,
+} from "serwist";
 
 declare global {
   interface WorkerGlobalScope {

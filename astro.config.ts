@@ -5,6 +5,5 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   integrations: [solid(), serwist()],
-  vite: { plugins: [tailwindcss()], build: { cssTarget: "safari15" } },
-  site: "https://poker-timer.rman.dev",
+  vite: { plugins: [tailwindcss()] },
 });

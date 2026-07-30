@@ -87,7 +87,7 @@ function ActiveTimer(props: ActiveTimerProps) {
 
           <div class="grid grid-cols-2 gap-4 mb-6">
             <div class="bg-gray-900 rounded-2xl p-4 border border-gray-700">
-              <div class="text-xs text-gray-300 uppercase tracking-wider mb-1">
+              <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Small Blind
               </div>
               <div class="text-3xl font-bold text-yellow-400">
@@ -95,7 +95,7 @@ function ActiveTimer(props: ActiveTimerProps) {
               </div>
             </div>
             <div class="bg-gray-900 rounded-2xl p-4 border border-gray-700">
-              <div class="text-xs text-gray-300 uppercase tracking-wider mb-1">
+              <div class="text-xs text-gray-400 uppercase tracking-wider mb-1">
                 Big Blind
               </div>
               <div class="text-3xl font-bold text-orange-400">
@@ -104,12 +104,12 @@ function ActiveTimer(props: ActiveTimerProps) {
             </div>
           </div>
 
-          <div class="flex justify-between items-center text-sm text-gray-300 mb-4">
+          <div class="flex justify-between items-center text-sm text-gray-400 mb-4">
             <span>{formatTime(props.timePerRound)}</span>
             <span
               classList={{
                 "text-green-400": isRunning(),
-                "text-gray-400": !isRunning(),
+                "text-gray-500": !isRunning(),
               }}
             >
               {isRunning() ? "RUNNING" : "PAUSED"}
@@ -124,9 +124,9 @@ function ActiveTimer(props: ActiveTimerProps) {
           onClick={() => (isRunning() ? pauseTimer() : startTimer())}
           classList={{
             "bg-red-600 hover:bg-red-500": isRunning(),
-            "bg-green-700 hover:bg-green-600": !isRunning(),
+            "bg-green-600 hover:bg-green-500": !isRunning(),
           }}
-          class="cursor-pointer text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
+          class="text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
         >
           <Show
             when={isRunning()}
@@ -177,7 +177,7 @@ function ActiveTimer(props: ActiveTimerProps) {
         <button
           type="button"
           onClick={resetTimer}
-          class="cursor-pointer bg-gray-600 hover:bg-gray-500 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
+          class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-4 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
         >
           <svg
             class="w-6 h-6 mr-2"
@@ -200,7 +200,7 @@ function ActiveTimer(props: ActiveTimerProps) {
       <button
         type="button"
         onClick={props.onBackToSetup}
-        class="cursor-pointer w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
+        class="w-full bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-4 rounded-xl transition-all transform hover:scale-105 active:scale-95 touch-manipulation shadow-lg flex items-center justify-center"
       >
         <svg
           class="w-5 h-5 mr-2"

@@ -1,73 +1,105 @@
 @import "tailwindcss";
 
-@theme {
-  --color-brand-green: oklch(39.254% 0.0896 152.56);
-
-  --color-green-300: oklch(87.12% 0.13624 154.486);
-  --color-green-200: oklch(92.5% 0.0805 156.06);
+/* Mobile optimizations */
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
 }
 
-@layer base {
-  * {
-    -webkit-tap-highlight-color: transparent;
-    -webkit-touch-callout: none;
-  }
-
-  input,
-  textarea,
-  select {
-    -webkit-user-select: text;
-    user-select: text;
-  }
-
-  input,
-  button,
-  textarea,
-  select {
-    font-size: 16px;
-  }
-
-  input[type="number"] {
-    -moz-appearance: textfield;
-  }
-
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  button:active {
-    transform: scale(0.98);
-  }
-
-  input:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.2);
-  }
+/* Allow text selection for inputs and specific elements */
+input,
+textarea,
+select {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
-@layer utilities {
-  .hide-scrollbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .hide-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  @supports (padding: max(0px)) {
-    .safe-area {
-      padding-left: max(1rem, env(safe-area-inset-left));
-      padding-right: max(1rem, env(safe-area-inset-right));
-      padding-bottom: max(1rem, env(safe-area-inset-bottom));
-    }
-  }
-}
-
+/* Landscape orientation optimizations */
 @media (orientation: landscape) {
   .min-h-screen {
     min-height: 100vh;
   }
+}
+
+/* Prevent zoom on input focus */
+input,
+button,
+textarea,
+select {
+  font-size: 16px;
+}
+
+/* Safe area insets for mobile devices */
+@supports (padding: max(0px)) {
+  .safe-area {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Optimize buttons for touch */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+/* Hide scrollbars for cleaner mobile look */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Default green background for consistency */
+body {
+  background-color: #14532d;
+}
+
+/* PWA manifest styles */
+@media (display-mode: standalone) {
+  body {
+    background-color: #14532d;
+  }
+}
+
+/* Enhanced form inputs */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Focus states */
+input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.2);
+}
+
+/* Better contrast for text */
+.text-green-300 {
+  color: #86efac;
+}
+
+.text-green-200 {
+  color: #bbf7d0;
+}
+
+/* Button hover effects */
+button:active {
+  transform: scale(0.98);
+}
+
+/* Smooth transitions */
+* {
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
