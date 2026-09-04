@@ -27,22 +27,24 @@
     "@babel/template": "7.29.7",
     "@babel/traverse": "7.29.8",
     "@babel/types": "7.29.8",
+    "@emnapi/runtime": "1.11.3",
     "@jridgewell/trace-mapping": "0.3.31",
     "esbuild": "0.28.2",
     "glob": "13.0.6",
     "js-yaml": "npm:neoyaml@0.2.0",
     "semver": "7.8.5",
+    "sharp": "0.35.4",
     "unstorage": "2.0.0-alpha.9",
     "zod": "4.5.4"
   },
   "dependencies": {
-    "astro": "7.2.8",
+    "astro": "7.2.10",
     "solid-js": "1.9.15",
     "tailwindcss": "4.3.3"
   },
   "devDependencies": {
     "@astrojs/solid-js": "7.0.2",
-    "@biomejs/biome": "2.5.11",
+    "@biomejs/biome": "2.5.12",
     "@gameroman/config": "0.2.9",
     "@serwist/astro": "10.0.0-preview.14",
     "@tailwindcss/vite": "4.3.3",
