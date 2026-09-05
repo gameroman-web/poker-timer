@@ -50,6 +50,6 @@
     "@tailwindcss/vite": "4.3.3",
     "@types/bun": "1.4.0",
     "typescript": "7.0.2",
-    "wrangler": "4.128.0"
+    "wrangler": "4.129.0"
   }
 }
