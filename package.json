@@ -38,7 +38,7 @@
     "zod": "4.5.4"
   },
   "dependencies": {
-    "astro": "7.2.10",
+    "astro": "7.3.1",
     "solid-js": "1.9.15",
     "tailwindcss": "4.3.3"
   },
